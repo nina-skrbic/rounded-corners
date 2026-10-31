@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'">
+<style>
+  html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: transparent;
+    pointer-events: none;
+    user-select: none;
+  }
+  svg { position: fixed; display: block; }
+  /* The source shape fills the bottom-left corner; the others are mirrored copies. */
+  .br { transform: scaleX(-1); }
+  .tl { transform: scaleY(-1); }
+  .tr { transform: scale(-1, -1); }
+</style>
+</head>
+<body>
+  <!-- Corner shape from assets/corner.svg (127×127 viewBox) -->
+  <svg id="corner" viewBox="0 0 127 127" preserveAspectRatio="none">
+    <path d="M0 0C0 70.1402 56.8598 127 127 127H0V0Z" fill="#000"/>
+  </svg>
+  <script>
+    const q = new URLSearchParams(location.search);
+    const corner = q.get('corner') || 'bl';
+    const size = Number(q.get('size') || 32);
+    const pad = Number(q.get('pad') || 0);
+    const svg = document.getElementById('corner');
+    svg.classList.add(corner);
+    svg.style.width = svg.style.height = size + 'px';
+    // The window sticks out PAD px past the screen edges; place the shape at the screen corner.
+    svg.style[corner.endsWith('l') ? 'left' : 'right'] = pad + 'px';
+    svg.style[corner.startsWith('t') ? 'top' : 'bottom'] = pad + 'px';
+    svg.querySelector('path').setAttribute('fill', q.get('color') || '#000');
+  </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+{
+  "name": "rounded-corners",
+  "productName": "Rounded Corners",
+  "version": "1.0.0",
+  "description": "Adds rounded corners to all four corners of your screen. Click-through, starts at login, works on macOS and Windows.",
+  "main": "src/main.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist:mac": "electron-builder --mac",
+    "dist:win": "electron-builder --win"
+  },
+  "devDependencies": {
+    "electron": "45.1.0",
+    "electron-builder": "26.18.0"
+  },
+  "build": {
+    "appId": "com.rounded-corners.app",
+    "productName": "Rounded Corners",
+    "files": [
+      "src/**/*",
+      "assets/**/*"
+    ],
+    "icon": "assets/icon.png",
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "universal"
+          ]
+        }
+      ],
+      "extendInfo": {
+        "LSUIElement": true
+      },
+      "identity": "-",
+      "hardenedRuntime": false
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false
+    }
+  }
+}
